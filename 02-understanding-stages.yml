@@ -1,0 +1,25 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  jobs:
+  - job: FirstJob
+    steps:
+    - bash: echo Build FirstJob
+    - bash: echo $(PipelineLevelVariable)
+    - bash: echo build number $(Build.BuildNumber)
+    - bash: echo build id $(Build.BuildId)
+    - bash: echo source branch name $(Build.SourceBranchName)
+    - bash: echo source directory $(Build.SourcesDirectory)
+    - bash: echo default directory $(System.DefaultWorkingDirectory)
+    - bash: ls -R $(System.DefaultWorkingDirectory)
+    - bash: echo artifacts staging directory $(Build.ArtifactStagingDirectory)
+    - bash: java -version
+    - bash: node --version
+    - bash: python --version 
+    - bash: mvn -version 
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
