@@ -5,5 +5,5 @@
 
 FROM openjdk:10
 EXPOSE 8000
-COPY  target/currency-exchange.jar app.jar
+COPY  /currency-exchange.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar" ]
