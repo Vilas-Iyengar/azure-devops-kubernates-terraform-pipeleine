@@ -5,11 +5,11 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-- stage: Initialization
+- stage: BuildAndDeploy
   jobs:
-  - job: InitJob
+  - job: BuildAndDeployJob
     steps:
-    - script: echo Initializing...
+    - script: echo K8S Terraform Azure!
       displayName: 'Run a one-line script'
 
     - task: DownloadSecureFile@1
@@ -17,11 +17,6 @@ stages:
       inputs:
         secureFile: 'azure-rsa.pub'
 
-- stage: Deployment
-  dependsOn: Initialization
-  jobs:
-  - job: DeployJob
-    steps:
     - task: TerraformCLI@2
       inputs:
         command: 'init'
