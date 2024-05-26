@@ -1,0 +1,35 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: BuildAndDeploy
+  jobs:
+  - job: BuildAndDeployJob
+    steps:
+    - script: echo K8S Terraform Azure!
+      displayName: 'Run a one-line script'
+
+    - task: DownloadSecureFile@1
+      name: publickley
+      inputs:
+        secureFile: 'azure-rsa.pub'
+
+    - task: TerraformCLI@2
+      inputs:
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
+        commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickley.secureFilePath)'
+        backendType: 'azurerm'
+        backendServiceArm: 'Free Trial(6adb7038-6e67-4371-90ad-1ecb36c9cb06)'
+        backendAzureRmTenantId: '502aa1e5-79f6-45e7-a4b6-1346b26e6626'
+        backendAzureRmSubscriptionId: '6adb7038-6e67-4371-90ad-1ecb36c9cb06'
+        ensureBackend: true
+        backendAzureRmResourceGroupName: 'terraform-backend-rg'
+        backendAzureRmResourceGroupLocation: 'westeurope'
+        backendAzureRmStorageAccountName: 'storageaccountvishwasiyengar'
+        backendAzureRmContainerName: 'containervishwasiyengar'
+        backendAzureRmKey: 'kubernetes-dev.tfstate'
+        allowTelemetryCollection: false
