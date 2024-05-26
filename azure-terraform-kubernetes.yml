@@ -9,7 +9,7 @@ stages:
   jobs:
   - job: BuildAndDeployJob
     steps:
-    - script: echo K8S Terraform Azure!
+    - script: echo K8S Terraform Azure!!!
       displayName: 'Run a one-line script'
 
     - task: DownloadSecureFile@1
