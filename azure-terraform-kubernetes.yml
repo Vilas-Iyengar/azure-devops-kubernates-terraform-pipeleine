@@ -15,7 +15,7 @@ stages:
     - task: DownloadSecureFile@1
       name: publickley
       inputs:
-        secureFile: 'azure-rsa.pub'
+        secureFile: 'azure-dev.pub'
 
     - task: TerraformCLI@2
       inputs:
