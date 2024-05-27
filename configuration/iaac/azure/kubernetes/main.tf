@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "resource_group" {
+resource "azurerm_resource_group" "terraform-backend-rg" {
   name     = "${var.resource_group}_${var.environment}"
   location = var.location
 }
