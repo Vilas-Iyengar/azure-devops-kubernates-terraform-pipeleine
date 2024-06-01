@@ -1,13 +1,11 @@
-# Terraform backend configuration
 terraform {
   backend "s3" {
-    bucket = "terraform-backend-state-in28minutes-123" # Ensure this is your bucket name
-    key    = "path/to/your/terraform/state" # Ensure this is your key/path
+    bucket = "terraform-backend-state-in28minutes-123"
+    key    = "path/to/your/terraform/state"
     region = "us-east-1"
   }
 }
 
-# AWS provider configuration
 provider "aws" {
   region = "us-east-1"
 }
@@ -23,10 +21,11 @@ data "aws_subnet_ids" "subnets" {
 # EKS Cluster module
 module "in28minutes-cluster" {
   source          = "terraform-aws-modules/eks/aws"
+  version         = "18.0.0"
   cluster_name    = "in28minutes-cluster"
   cluster_version = "1.14"
+  subnets         = data.aws_subnet_ids.subnets.ids
   vpc_id          = aws_default_vpc.default.id
-  vpc_subnets     = data.aws_subnet_ids.subnets.ids
 
   node_groups = {
     in28minutes-ng = {
@@ -41,11 +40,13 @@ module "in28minutes-cluster" {
 
 # EKS Cluster data source
 data "aws_eks_cluster" "cluster" {
+  depends_on = [module.in28minutes-cluster]
   name = module.in28minutes-cluster.cluster_id
 }
 
 # EKS Cluster authentication
 data "aws_eks_cluster_auth" "cluster" {
+  depends_on = [module.in28minutes-cluster]
   name = module.in28minutes-cluster.cluster_id
 }
 
