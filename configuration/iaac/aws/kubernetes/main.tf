@@ -34,7 +34,7 @@ module "aws-terrsform-cluster" {
   cluster_version = "1.14"
   subnets         = ["subnet-0ca000271c99fa31d", "subnet-0bb85fa910743aab2"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
-  vpc_id          = aws_default_vpc.default.id
+  vpc_id          = "vpc-075a753acd2c3cc58"
 
   #vpc_id         = "vpc-1234556abcdef"
 
