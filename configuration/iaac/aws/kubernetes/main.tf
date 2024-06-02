@@ -19,7 +19,7 @@ resource "aws_default_vpc" "default" {
 
 ### Uncomment this section after cluster creation line numbers 25 to 31 ###
 #data "aws_eks_cluster" "example" {
-#   name = "in28minutes-cluster"
+#   name = "aws-terraform-cluster"
 # }
 
 #data "aws_eks_cluster_auth" "example" {
@@ -36,11 +36,11 @@ provider "kubernetes" {
 }
 
 
-module "in28minutes-cluster" {
+module "aws-terraform-cluster" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.15.3"
 
-  cluster_name    = "in28minutes-cluster"
+  cluster_name    = "aws-terraform-cluster"
   cluster_version = "1.29"
 
   subnet_ids         = ["subnet-0e0685f37c81e2767", "subnet-0a1514a0b43e11758","subnet-0aaaf4ea6cccfad3a"] #CHANGE # Donot choose subnet from us-east-1e
